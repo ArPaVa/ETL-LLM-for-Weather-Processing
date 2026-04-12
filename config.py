@@ -7,7 +7,9 @@ OPENWEATHERMAP_API_KEY = os.getenv("OPENWHEATHERMAP_API_KEY")
 WEATHERAPI_API_KEY = os.getenv("WEATHERAPI_API_KEY")
 OPENWEATHERMAP_URL = "https://api.openweathermap.org/data/2.5/forecast"
 WEATHERAPI_URL = "https://api.weatherapi.com/v1/forecast.json"
-           #url = "http://api.weatherapi.com/v1/forecast.json"
+
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
 PG_USER= os.getenv("DB_USERNAME")
 PG_PASSWORD= os.getenv("DB_PASSWORD")
 PG_HOST= os.getenv("DB_HOST")
