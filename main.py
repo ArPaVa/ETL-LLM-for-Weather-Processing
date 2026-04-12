@@ -1,15 +1,15 @@
-from api_ingestion.api_ingestion import get_forecast_OWM, get_forecast_WA
-
-from datetime import datetime
-from typing import Dict, Any
 import json
 from config import *
+from llm.llm import *
+from llm.prompts import *
+from typing import Dict, Any
+from datetime import datetime
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models.forecast import Base,WeatherForecast
-from sqlalchemy import create_engine
 from api_ingestion.api_ingestion import combine_forecasts_by_key
-from models.forecast import save_combined_forecasts
-from llm.llm import *
+from api_ingestion.api_ingestion import get_forecast_OWM, get_forecast_WA
+from models.forecast import save_combined_forecasts, get_forecasts_without_recommendations, parse_and_store_recommendation
 
 def db_creation():
     engine = create_engine(DB_URL, echo=False)
@@ -27,4 +27,19 @@ def db_creation():
 #session = db_creation()
 #save_combined_forecasts(session, combined_data)
 
-gemma3call(activities_suitability_prompt)
+def generate_recommendations(session):
+
+    unrecommended_forecasts = get_forecasts_without_recommendations(session)
+    if not unrecommended_forecasts:
+        print("No forecasts without recommendations found.")
+    else:
+        for forecast in unrecommended_forecasts[:10]:
+            prompt = build_activity_prompt_from_row(forecast)
+           
+            response = geminicall(prompt)
+            #print(response.text)
+            parse_and_store_recommendation(session=session,weather_forecast_id=forecast.id,gemini_response_text=response.text)
+
+session = db_creation()
+generate_recommendations(session)
+#print(f"Found {len(unrecommended_forecasts)} forecasts without LLM recommendations.")
