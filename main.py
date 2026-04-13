@@ -88,6 +88,3 @@ if __name__ == "__main__":
         generate_recommendations(llm_calls=args.calls)
         print("Recommendations generated (or none needed).")
 
-#extract_and_store_forecasts() WORKING
-# generate_recommendations(session) WORKING BUT IT SKIPPED 4 weather forecast
-#print(f"Found {len(unrecommended_forecasts)} forecasts without LLM recommendations.")
