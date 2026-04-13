@@ -3,8 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session, relationship, join, outerjoin
 from sqlalchemy.schema import Index
 import datetime
-
-
+import json
 
 Base = declarative_base()
 
@@ -147,8 +146,6 @@ def get_forecasts_without_recommendations(session: Session) -> list:
     Return a list of WeatherForecast objects that do NOT have a recommendation yet.
     """
 
-    # Use a LEFT JOIN and filter where the recommendation is NULL
-    # i.e., forecast with no related WeatherRecommendation
     q = (
         session.query(WeatherForecast)
         .outerjoin(WeatherRecommendation, WeatherForecast.id == WeatherRecommendation.weather_forecast_id)
@@ -156,9 +153,6 @@ def get_forecasts_without_recommendations(session: Session) -> list:
     )
 
     return q.all()
-
-import json
-from sqlalchemy.orm import Session
 
 def parse_and_store_recommendation(session: Session, weather_forecast_id, gemini_response_text):
     start = gemini_response_text.find("{")
