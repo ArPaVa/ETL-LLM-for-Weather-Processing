@@ -1,6 +1,6 @@
-from sqlalchemy import create_engine, Column, Integer, String, Numeric, Date, Time, DateTime, Text, ForeignKey
+from sqlalchemy import Column, Integer, String, Numeric, Date, Time, DateTime, Text, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import Session, relationship, join, outerjoin
+from sqlalchemy.orm import Session, relationship
 from sqlalchemy.schema import Index
 import datetime
 import json
@@ -164,48 +164,48 @@ def parse_and_store_recommendation(session: Session, weather_forecast_id, gemini
     json_str = gemini_response_text[start:end]
     
     
-    # 1. parse the raw JSON from Gemini
+    # Parse the raw JSON from Gemini
     data = json.loads(json_str)
 
-    # 2. create a new WeatherRecommendation
+    # Create a new WeatherRecommendation
     rec = WeatherRecommendation(
         weather_forecast_id = weather_forecast_id,
 
         # running
-        running_assessment    = data["running"   ]["assessment"],
-        running_explanation   = data["running"   ]["explanation"],
+        running_assessment    = data["running"]["assessment"],
+        running_explanation   = data["running"]["explanation"],
 
         # cycling
-        cycling_assessment    = data["cycling"   ]["assessment"],
-        cycling_explanation   = data["cycling"   ]["explanation"],
+        cycling_assessment    = data["cycling"]["assessment"],
+        cycling_explanation   = data["cycling"]["explanation"],
 
         # hiking
-        hiking_assessment     = data["hiking"    ]["assessment"],
-        hiking_explanation    = data["hiking"    ]["explanation"],
+        hiking_assessment     = data["hiking"]["assessment"],
+        hiking_explanation    = data["hiking"]["explanation"],
 
         # golfing
-        golfing_assessment    = data["golfing"   ]["assessment"],
-        golfing_explanation   = data["golfing"   ]["explanation"],
+        golfing_assessment    = data["golfing"]["assessment"],
+        golfing_explanation   = data["golfing"]["explanation"],
 
         # skydiving
-        skydiving_assessment  = data["skydiving" ]["assessment"],
-        skydiving_explanation = data["skydiving" ]["explanation"],
+        skydiving_assessment  = data["skydiving"]["assessment"],
+        skydiving_explanation = data["skydiving"]["explanation"],
 
         # swimming
-        swimming_assessment   = data["swimming"  ]["assessment"],
-        swimming_explanation  = data["swimming"  ]["explanation"],
+        swimming_assessment   = data["swimming"]["assessment"],
+        swimming_explanation  = data["swimming"]["explanation"],
 
         # surfing
-        surfing_assessment    = data["surfing"   ]["assessment"],
-        surfing_explanation   = data["surfing"   ]["explanation"],
+        surfing_assessment    = data["surfing"]["assessment"],
+        surfing_explanation   = data["surfing"]["explanation"],
 
         # birdwatching
         birdwatching_assessment = data["birdwatching"]["assessment"],
         birdwatching_explanation= data["birdwatching"]["explanation"],
 
         # picnics
-        picnics_assessment    = data["picnics"   ]["assessment"],
-        picnics_explanation   = data["picnics"   ]["explanation"],
+        picnics_assessment    = data["picnics"]["assessment"],
+        picnics_explanation   = data["picnics"]["explanation"],
 
         # photography
         photography_assessment = data["photography"]["assessment"],
@@ -216,8 +216,8 @@ def parse_and_store_recommendation(session: Session, weather_forecast_id, gemini
         sunbathing_explanation= data["sunbathing"]["explanation"],
 
         # climbing
-        climbing_assessment   = data["climbing"  ]["assessment"],
-        climbing_explanation  = data["climbing"  ]["explanation"],
+        climbing_assessment   = data["climbing"]["assessment"],
+        climbing_explanation  = data["climbing"]["explanation"],
 
         # stargazing
         stargazing_assessment = data["stargazing"]["assessment"],

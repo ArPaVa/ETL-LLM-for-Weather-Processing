@@ -1,15 +1,12 @@
-import json
-from config import *
-from llm.llm import *
-from llm.prompts import *
-from typing import Dict, Any
-from datetime import datetime
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from models.forecast import Base, WeatherForecast
-from api_ingestion.api_ingestion import combine_forecasts_by_key
-from api_ingestion.api_ingestion import get_forecast_OWM, get_forecast_WA
 from models.forecast import save_combined_forecasts, get_forecasts_without_recommendations, parse_and_store_recommendation
+from api_ingestion.api_ingestion import get_forecast_OWM, get_forecast_WA
+from api_ingestion.api_ingestion import combine_forecasts_by_key
+from models.forecast import Base, WeatherForecast
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
+from llm.prompts import *
+from llm.llm import *
+from config import *
 
 def db_creation():
     engine = create_engine(DB_URL, echo=False)

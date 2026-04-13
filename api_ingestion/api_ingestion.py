@@ -1,8 +1,6 @@
-import os
-import requests
-from config import *
 from datetime import datetime
-#from sqlalchemy.orm import Session
+from config import *
+import requests
 
 #OWM = Openweathermap
 def get_forecast_OWM(lat, lon, units="metric"):
@@ -123,4 +121,3 @@ def combine_forecasts_by_key(owm_data, wa_data):
         combined.append(row)
 
     return combined
-
